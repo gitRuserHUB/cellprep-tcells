@@ -4,7 +4,7 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
 
-  const RATES = Object.freeze({ cd11b: 0.03, cd49b: 0.015, cd45r: 0.015 });
+  const RATES = Object.freeze({ cd11b: 0.03, cd49b: 0.03, cd45r: 0.015 });
 
   function normalizeInput(value) {
     return String(value == null ? '' : value).trim().replace(/[０-９．]/g, function (char) {
