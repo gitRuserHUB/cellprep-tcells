@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f6f8">
+  <meta name="description" content="T 细胞磁珠分选用量计算器：输入细胞计数，即时计算 BSA/PBS、抗体和磁珠用量。">
+  <title>CellPrep · T 细胞分选</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./calculator.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="brand-row">
+      <div class="brand-lockup"><span class="brand-mark" aria-hidden="true"><i class="mark-core"></i><i class="mark-orbit"></i></span><span class="brand-name">CellPrep</span></div>
+    </header>
+    <main class="workspace">
+      <section class="input-side" aria-label="细胞计数输入">
+        <div class="intro"><p class="eyebrow">T CELL ISOLATION</p><h1>T 细胞分选<span class="title-dot">.</span></h1><p class="subtitle">输入 n，选择数量级。</p></div>
+        <div class="input-card">
+          <div class="card-topline"><label class="section-label" for="cell-count">细胞计数</label><button type="button" id="clear" class="clear-button">清空</button></div>
+          <div class="number-entry"><input id="cell-count" class="count-input" type="text" inputmode="decimal" autocomplete="off" maxlength="20" placeholder="输入 n" aria-describedby="count-summary"><span class="times-symbol">×</span><div class="exponent-picker" role="group" aria-label="选择细胞数量级"><button type="button" class="exponent-option selected" data-exponent="6" aria-pressed="true" aria-label="十的六次方">10<sup>6</sup></button><button type="button" class="exponent-option" data-exponent="7" aria-pressed="false" aria-label="十的七次方">10<sup>7</sup></button></div></div>
+          <div id="count-summary" class="count-summary" aria-live="polite">例如 10 × 10⁶ = 1 × 10⁷</div>
+        </div>
+      </section>
+      <section class="results-side" aria-label="用量计算结果">
+        <div class="results-header"><h2 class="section-label">用量清单</h2><span class="unit-caption">所有体积 · μL</span></div>
+        <article class="result-card antibody-card">
+          <div class="phase-header"><h3 class="phase-name"><span class="phase-index">01</span>抗体孵育</h3><span class="concentration-tag">200 × 10⁶ 个/mL</span></div>
+          <div class="buffer-result"><div><p class="reagent-label">0.5% BSA/PBS</p><p class="reagent-help">缓冲液加入量</p></div><div class="volume-lockup"><output data-output="antibodyBufferUl" class="volume-primary empty-value">—</output><span class="volume-unit">μL</span></div></div>
+          <div class="antibody-grid"><div class="antibody-item"><p class="antibody-name">CD11b</p><p class="antibody-dose"><output data-output="cd11bUl">—</output><span> μL</span></p></div><div class="antibody-item"><p class="antibody-name">CD49b</p><p class="antibody-dose"><output data-output="cd49bUl">—</output><span> μL</span></p></div><div class="antibody-item"><p class="antibody-name">CD45R</p><p class="antibody-dose"><output data-output="cd45rUl">—</output><span> μL</span></p></div></div>
+          <div class="total-row"><span>抗体合计</span><span><output data-output="antibodyTotalUl" class="total-value">—</output><span class="small-unit"> μL</span></span></div>
+        </article>
+        <article class="result-card bead-card">
+          <div class="phase-header"><h3 class="phase-name"><span class="phase-index">02</span>磁珠孵育</h3><span class="concentration-tag">100 × 10⁶ 个/mL</span></div>
+          <div class="buffer-result"><div><p class="reagent-label">0.5% BSA/PBS</p><p class="reagent-help">缓冲液加入量</p></div><div class="volume-lockup"><output data-output="beadBufferUl" class="volume-primary empty-value">—</output><span class="volume-unit">μL</span></div></div>
+          <div class="bead-dose"><div><p class="bead-label">磁珠加入量</p><p class="bead-ratio">抗体合计 × 2</p></div><span><output data-output="beadUl" class="bead-value">—</output><span class="small-unit"> μL</span></span></div>
+        </article>
+        <p class="precision-note">体积保留两位小数</p>
+        <p id="small-volume" class="small-volume-note" hidden>部分用量显示为 0.00 μL，表示四舍五入后的极小用量，并非无需添加。</p>
+        <div class="actions"><button type="button" id="copy" class="copy-button" disabled><svg width="17" height="19" viewBox="0 0 20 22" fill="none" aria-hidden="true"><rect x="5" y="6" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M12 3H4a2 2 0 0 0-2 2v11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>复制用量清单</button><button type="button" id="rules" class="rules-button">计算规则<span>↗</span></button></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="rules-dialog" class="rules-dialog" aria-labelledby="rules-title">
+    <div class="modal-handle" aria-hidden="true"></div>
+    <div class="modal-heading"><div><p class="eyebrow">CALCULATION</p><h2 id="rules-title" class="modal-title">计算规则</h2></div><button type="button" id="close-rules" class="close-button" aria-label="关闭计算规则">×</button></div>
+    <div class="rules-scroll">
+      <p class="rule-note">N 为细胞总数；全部结果以 μL 显示。</p>
+      <section class="rule-section"><h3 class="rule-title">01 / 抗体孵育</h3><p class="formula">孵育体积 = N ÷ (200 × 10⁶) × 1000</p><p class="rate-row"><span>CD11b</span><span>0.030 μL / 10⁶ 个细胞</span></p><p class="rate-row"><span>CD49b、CD45R</span><span>各 0.015 μL / 10⁶ 个细胞</span></p></section>
+      <section class="rule-section"><h3 class="rule-title">02 / 磁珠孵育</h3><p class="formula">孵育体积 = N ÷ (100 × 10⁶) × 1000</p><p class="rate-row"><span>磁珠用量</span><span>三种抗体总量 × 2</span></p></section>
+      <p class="rule-note bottom-note">缓冲液按细胞数直接计算。合计使用未舍入值。</p>
+    </div>
+    <button type="button" id="done-rules" class="done-button">完成</button>
+  </dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
