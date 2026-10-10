@@ -8,7 +8,7 @@
   <title>CellPrep · T 细胞分选</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
-  <script src="./calculator.js?v=20261009-2" defer></script>
+  <script src="./calculator.js?v=20261010-3" defer></script>
   <script src="./app.js" defer></script>
 </head>
 <body>
@@ -50,7 +50,7 @@
     <div class="modal-heading"><div><p class="eyebrow">CALCULATION</p><h2 id="rules-title" class="modal-title">计算规则</h2></div><button type="button" id="close-rules" class="close-button" aria-label="关闭计算规则">×</button></div>
     <div class="rules-scroll">
       <p class="rule-note">N 为细胞总数；全部结果以 μL 显示。</p>
-      <section class="rule-section"><h3 class="rule-title">01 / 抗体孵育</h3><p class="formula">孵育体积 = N ÷ (200 × 10⁶) × 1000</p><p class="rate-row"><span>CD11b、CD49b</span><span>各 0.030 μL / 10⁶ 个细胞</span></p><p class="rate-row"><span>CD45R</span><span>0.015 μL / 10⁶ 个细胞</span></p></section>
+      <section class="rule-section"><h3 class="rule-title">01 / 抗体孵育</h3><p class="formula">孵育体积 = N ÷ (200 × 10⁶) × 1000</p><p class="rate-row"><span>CD11b</span><span>0.015 μL / 10⁶ 个细胞</span></p><p class="rate-row"><span>CD49b、CD45R</span><span>各 0.030 μL / 10⁶ 个细胞</span></p></section>
       <section class="rule-section"><h3 class="rule-title">02 / 磁珠孵育</h3><p class="formula">孵育体积 = N ÷ (100 × 10⁶) × 1000</p><p class="rate-row"><span>磁珠用量</span><span>三种抗体总量 × 2</span></p></section>
       <p class="rule-note bottom-note">缓冲液按细胞数直接计算。合计使用未舍入值。</p>
     </div>
