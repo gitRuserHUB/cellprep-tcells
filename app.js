@@ -40,7 +40,7 @@
       button.setAttribute('aria-pressed', String(selected));
     });
     document.getElementById('small-volume').hidden = !result || ![result.cd11bUl, result.cd49bUl, result.cd45rUl, result.beadUl]
-      .some(value => value > 0 && value < 0.005);
+      .some(value => value > 0 && value < 0.0005);
     copy.disabled = !result;
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ value: input.value, exponent })); } catch (_) {}
   }

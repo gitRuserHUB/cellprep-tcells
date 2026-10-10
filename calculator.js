@@ -36,11 +36,11 @@
 
   function formatVolume(value) {
     if (!Number.isFinite(value) || value < 0) return '—';
-    // Round a decimal string to avoid binary floating-point surprises at x.xx5.
+    // Round a decimal string to avoid binary floating-point surprises at x.xxx5.
     const parts = String(value).split('e');
-    const shifted = Number(parts[0] + 'e' + (Number(parts[1] || 0) + 2));
-    const rounded = Math.round(shifted) / 100;
-    return rounded.toFixed(2);
+    const shifted = Number(parts[0] + 'e' + (Number(parts[1] || 0) + 3));
+    const rounded = Math.round(shifted) / 1000;
+    return rounded.toFixed(3);
   }
 
   function formatCount(value) {
@@ -62,7 +62,7 @@
       '', '02 磁珠孵育',
       '0.5% BSA/PBS：' + formatVolume(result.beadBufferUl) + ' μL',
       '磁珠：' + formatVolume(result.beadUl) + ' μL（抗体合计 × 2）',
-      '', '显示保留两位小数；合计按未舍入值计算。'
+      '', '显示保留三位小数；合计按未舍入值计算。'
     ].join('\n');
   }
 
